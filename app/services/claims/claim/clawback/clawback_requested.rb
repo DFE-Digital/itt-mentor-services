@@ -17,9 +17,9 @@ class Claims::Claim::Clawback::ClawbackRequested < ApplicationService
         )
       end
 
-      claim.update!(
-        status: :clawback_requires_approval,
-        clawback_requested_by: current_user,
+      Claims::Claim::ChangeStatus.call(
+        claim:, actor: current_user,
+        attributes: { status: :clawback_requires_approval, clawback_requested_by: current_user }
       )
     end
   end

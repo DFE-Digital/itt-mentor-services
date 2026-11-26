@@ -5,7 +5,7 @@ class Claims::Claim::Clawback::Approve < ApplicationService
   end
 
   def call
-    claim.update!(status: :clawback_requested, clawback_approved_by: current_user)
+    Claims::Claim::ChangeStatus.call(claim:, attributes: { status: :clawback_requested, clawback_approved_by: current_user }, actor: current_user)
   end
 
   private

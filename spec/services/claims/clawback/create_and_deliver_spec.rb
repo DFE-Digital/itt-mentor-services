@@ -17,6 +17,15 @@ describe Claims::Clawback::CreateAndDeliver do
         .and change { Claims::Claim.pluck(:status).uniq }.from(%w[clawback_requested]).to(%w[clawback_in_progress])
         .and enqueue_mail(Claims::ESFAMailer, :claims_require_clawback)
       end
+
+      it "exports the transitioned status and links each event to the file-bearing batch" do
+        create_and_deliver
+
+        clawback = Claims::Clawback.last
+        rows = CSV.parse(clawback.csv_file.download, headers: true)
+        expect(rows.map { |row| row["claim_status"] }).to eq(%w[clawback_in_progress])
+        expect(claims.first.status_changes.order(:sequence).last).to have_attributes(source: clawback, actor: current_user)
+      end
     end
 
     context "when there are no claims with the status 'clawback_requested'" do

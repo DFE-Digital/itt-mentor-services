@@ -23,10 +23,14 @@ module Claims
       raise "Invalid wizard state" unless valid? && csv_inputs_valid?
 
       csv_file = Claims::ClawbackResponse::GenerateCSVFile.call(csv_content: steps.fetch(:upload).csv_content)
-      clawback = Claims::Clawback.create!(claims: Claims::Claim.find(updatable_claim_ids), csv_file: File.open(csv_file.to_io))
-      Claims::Clawback::UpdateCollectionWithESFAResponseJob.perform_later(updatable_claim_ids)
-
-      Claims::ClaimActivity.create!(action: :clawback_response_uploaded, user: current_user, record: clawback)
+      Claims::Clawback.transaction do |transaction|
+        ids = updatable_claim_ids
+        clawback = Claims::Clawback.create!(claims: Claims::Claim.find(ids), csv_file: File.open(csv_file.to_io))
+        Claims::ClaimActivity.create!(action: :clawback_response_uploaded, user: current_user, record: clawback)
+        transaction.after_commit do
+          Claims::Clawback::UpdateCollectionWithESFAResponseJob.perform_later(ids, response: clawback, actor: current_user)
+        end
+      end
     end
 
     def clawback_in_progress_claims

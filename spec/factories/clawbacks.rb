@@ -12,6 +12,10 @@ FactoryBot.define do
     claims { build_list(:claim, 3, :clawback_in_progress) }
     csv_file { file_fixture("example-clawbacks.csv") }
 
+    to_create do |clawback|
+      Claims::AuditContext.set(actor: Claims::AuditContext.actor || FactoryBot.create(:claims_support_user)) { clawback.save! }
+    end
+
     transient do
       claims_for_link { [] }
     end

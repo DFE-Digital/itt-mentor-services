@@ -15,8 +15,8 @@ class Claims::Claim::ChangeProvider < ApplicationService
 
       next unless requires_audit
 
-      reset_audit
       provider_sampling = Claims::ProviderSampling.create!(provider:, claims: [claim], sampling:)
+      Claims::AuditContext.set(source: provider_sampling) { reset_audit }
 
       transaction.after_commit do
         provider_sampling.provider_users.each do |provider_user|
@@ -44,7 +44,7 @@ class Claims::Claim::ChangeProvider < ApplicationService
     claim.mentor_trainings.each do |mentor_training|
       mentor_training.update!(not_assured: false, reason_not_assured: nil, hours_clawed_back: nil)
     end
-    claim.update!(status: :sampling_in_progress, amendment_notification_sent_at: nil)
+    Claims::Claim::ChangeStatus.call(claim:, attributes: { status: :sampling_in_progress, amendment_notification_sent_at: nil })
   end
 
   def sampling

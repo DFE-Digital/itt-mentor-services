@@ -3,6 +3,8 @@ require "rails_helper"
 RSpec.describe Claims::Sampling::SendProviderRemindersJob, type: :job do
   subject(:send_reminders_job) { described_class.new }
 
+  include_context "with an attributed claim operation"
+
   let(:provider) { create(:claims_provider) }
   let(:provider_user) { create(:claims_provider_user, providers: [provider]) }
   let(:another_provider_user) { create(:claims_provider_user, providers: [provider]) }

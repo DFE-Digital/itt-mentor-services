@@ -25,6 +25,10 @@ module Claims
       def process_submission
         raise "Invalid wizard state" unless valid?
 
+        ::Claims::AuditContext.set(actor: current_user) { process_action }
+      end
+
+      def process_action
         case action
         when "approve"
           ::Claims::Claim::Sampling::Paid.call(claim:)

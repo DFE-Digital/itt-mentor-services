@@ -28,7 +28,8 @@ RSpec.describe Claims::RevertClaimsToSubmitted do
         expect { described_class.call }.to change(Claims::Claim.submitted, :count).from(1).to(14)
           .and not_change(Claims::Claim.draft, :count)
           .and not_change(Claims::Claim.internal_draft, :count)
-          .and change(Claims::ClaimActivity, :count).from(5).to(0)
+          .and not_change(Claims::ClaimActivity, :count)
+          .and change(Claims::ClaimStatusChange, :count).by(13)
       end
 
       it "updates all sampling_reasons, unpaid_reasons and payment_in_progress_at attributes to nil" do

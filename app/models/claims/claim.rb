@@ -40,6 +40,7 @@
 class Claims::Claim < ApplicationRecord
   audited
   has_associated_audits
+  include Claims::RecordsStatusChanges
 
   belongs_to :school
   belongs_to :provider

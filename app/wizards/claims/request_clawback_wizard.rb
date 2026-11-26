@@ -58,7 +58,9 @@ module Claims
       if mentor_trainings_have_clawback_hours?
         submit_esfa_responses
       else
-        Claims::Claim::Clawback::ClawbackNotRequired.call(claim:, esfa_responses: esfa_responses_for_mentor_trainings)
+        Claims::AuditContext.set(actor: current_user) do
+          Claims::Claim::Clawback::ClawbackNotRequired.call(claim:, esfa_responses: esfa_responses_for_mentor_trainings)
+        end
       end
     end
 

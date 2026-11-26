@@ -23,11 +23,14 @@ module Claims
       raise "Invalid wizard state" unless valid? && csv_inputs_valid?
 
       csv_file = Claims::PaymentResponse::GenerateCSVFile.call(csv_content: steps.fetch(:upload).csv_content)
-      payment_response = Claims::PaymentResponse.create!(csv_file: File.open(csv_file.to_io), user: current_user)
-
-      Claims::Payment::UpdateCollectionWithPayerResponseJob.perform_later(claim_update_details)
-
-      Claims::ClaimActivity.create!(action: :payment_response_uploaded, user: current_user, record: payment_response)
+      Claims::PaymentResponse.transaction do |transaction|
+        payment_response = Claims::PaymentResponse.create!(csv_file: File.open(csv_file.to_io), user: current_user, processed: true)
+        details = claim_update_details
+        Claims::ClaimActivity.create!(action: :payment_response_uploaded, user: current_user, record: payment_response)
+        transaction.after_commit do
+          Claims::Payment::UpdateCollectionWithPayerResponseJob.perform_later(details, response: payment_response)
+        end
+      end
     end
 
     def payment_in_progress_claims

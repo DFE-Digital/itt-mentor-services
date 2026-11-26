@@ -3,6 +3,7 @@ class Claims::ResetDatabase < ApplicationService
     return if HostingEnvironment.env.production?
 
     ActiveRecord::Base.transaction do
+      Claims::ClaimStatusChange.delete_all
       Claims::Claim.destroy_all
       Claims::MentorMembership.destroy_all
 

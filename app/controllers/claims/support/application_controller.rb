@@ -5,6 +5,10 @@ class Claims::Support::ApplicationController < Claims::ApplicationController
 
   private
 
+  def load_claim_history
+    @pagy, @claim_status_changes = pagy(Claims::ClaimStatusChangesQuery.call(claim: @claim))
+  end
+
   def authorize_user!
     return if current_user.support_user?
 

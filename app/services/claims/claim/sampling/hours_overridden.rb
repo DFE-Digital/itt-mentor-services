@@ -12,7 +12,9 @@ class Claims::Claim::Sampling::HoursOverridden < ApplicationService
       if clawback_hours?
         Claims::Claim::Clawback::MoveToClawback.call(claim:, current_user:)
       else
-        Claims::Claim::Clawback::ClawbackNotRequired.call(claim:, esfa_responses:)
+        Claims::AuditContext.set(actor: current_user) do
+          Claims::Claim::Clawback::ClawbackNotRequired.call(claim:, esfa_responses:)
+        end
       end
     end
   end

@@ -13,7 +13,10 @@ class Claims::Payment::CreateAndDeliver < ApplicationService
       payment = Claims::Payment.create!(sent_by: current_user, csv_file: File.open(csv_file.to_io), claims: submitted_claims)
 
       submitted_claims.find_each do |claim|
-        claim.update!(status: :payment_in_progress, payment_in_progress_at: Time.current)
+        Claims::Claim::ChangeStatus.call(
+          claim:, actor: current_user, source: payment, expected_status: :submitted,
+          attributes: { status: :payment_in_progress, payment_in_progress_at: Time.current }
+        )
       end
 
       Claims::ClaimActivity.create!(action: :payment_request_delivered, user: current_user, record: payment)

@@ -18,9 +18,10 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Claims::PaymentResponse < ApplicationRecord
-  belongs_to :user
+  belongs_to :user, class_name: "Claims::SupportUser"
 
   has_one_attached :csv_file
+  has_many :status_changes, as: :source, class_name: "Claims::ClaimStatusChange", dependent: :restrict_with_exception
 
   validates :csv_file, presence: true
 

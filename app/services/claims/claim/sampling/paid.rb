@@ -4,7 +4,7 @@ class Claims::Claim::Sampling::Paid < ApplicationService
   end
 
   def call
-    claim.update!(status: :paid)
+    Claims::Claim::ChangeStatus.call(claim:, attributes: { status: :paid })
   end
 
   private

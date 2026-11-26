@@ -1,4 +1,14 @@
 class Claims::Support::ClaimPolicy < Claims::ApplicationPolicy
+  def legacy_history?
+    user.support_user?
+  end
+
+  class Scope < ApplicationPolicy::Scope
+    def resolve
+      user.support_user? ? scope.all : scope.none
+    end
+  end
+
   def create?
     current_claim_window?
   end

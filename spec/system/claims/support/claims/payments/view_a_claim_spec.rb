@@ -82,8 +82,10 @@ RSpec.describe "View claims", service: :claims, type: :system do
   end
 
   def then_i_can_see_the_claim_history
-    expect(page).to have_h2("History")
-
-    expect(page).to have_paragraph("There is no activity.")
+    within "#history" do
+      expect(page).to have_h2("History")
+      expect(page).to have_content("Payer needs information")
+      expect(page).to have_link("Legacy audit archive", href: claims_support_claim_legacy_history_path(@claim))
+    end
   end
 end

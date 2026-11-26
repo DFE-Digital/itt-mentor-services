@@ -11,16 +11,13 @@ class Claims::Support::Claims::SamplingsController < Claims::Support::Applicatio
   end
 
   def show
-    claim_activities = Claims::ClaimActivitiesForClaimQuery.call(claim: @claim)
-    @pagy, @claim_activities = pagy(claim_activities)
-    @claim_activities = claim_activities.decorate
+    load_claim_history
   end
 
   def confirm_approval; end
 
   def update
-    @claim.status = :paid
-    @claim.save!
+    Claims::Claim::ChangeStatus.call(claim: @claim, attributes: { status: :paid })
 
     Claims::ClaimActivity.create!(action: :provider_approved_audit, user: current_user, record: @claim)
 

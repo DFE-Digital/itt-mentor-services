@@ -49,6 +49,26 @@ erDiagram
     uuid claim_window_id FK
   }
 
+  ClaimStatusChange {
+    uuid id PK
+    uuid claim_id
+    string from_status
+    string to_status
+    datetime occurred_at "Empty if the historical time is unknown"
+    uuid actor_id "User ID, if known"
+    string actor_type "User model, if known"
+    string actor_name "Name recorded when the change was made, if known"
+    string actor_kind "user, system or unknown"
+    string system_operation "Name of the automated process"
+    uuid source_id "Related record ID, if known"
+    string source_type "Related record model, if known"
+    string operation_id
+    bigint sequence "Order of changes within a claim"
+    bigint legacy_audit_id UK "Original audit ID, if imported"
+    jsonb details
+    bool imported
+  }
+
   MentorMembership {
     uuid id PK
     string type "This is used to define which service this particular membership belongs to. Placements::MentorMembership or Claims::MentorMembership"
@@ -221,6 +241,7 @@ erDiagram
   Claim }|--|| ClaimWindow : "belongs to"
   Claim }|--|| Provider : "belongs to"
   Claim }|--|| School : "belongs to"
+  ClaimStatusChange }|--|| Claim : "belongs to"
   MentorMembership }|--|| Mentor : "belongs to"
   MentorMembership }|--|| School : "belongs to"
   MentorTraining }|--|| Claim : "belongs to"
@@ -244,6 +265,10 @@ erDiagram
   UserMembership }|--o| Provider : "belongs to (polymorphic)"
   UserMembership }|--o| School : "belongs to (polymorphic)"
 ```
+
+`ClaimStatusChange` records a claim's status changes. Each entry identifies the previous and new status, when the change happened, and the user or automated process responsible. Older records may have missing details; these stay unknown rather than being guessed.
+
+Deleting a claim does not delete its status history. For this reason, `ClaimStatusChange.claim_id` has no database foreign key. When the claim no longer exists, checks report its history as orphaned evidence, meaning records whose claim has been removed. The records are kept, not attached to another claim.
 
 ## Onboarding Schools and Providers into the services
 

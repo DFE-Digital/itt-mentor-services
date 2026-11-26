@@ -5,7 +5,7 @@ class Claims::Claim::Payment::InformationRequested < ApplicationService
   end
 
   def call
-    claim.update!(status: :payment_information_requested, unpaid_reason:)
+    Claims::Claim::ChangeStatus.call(claim:, attributes: { status: :payment_information_requested, unpaid_reason: })
   end
 
   private

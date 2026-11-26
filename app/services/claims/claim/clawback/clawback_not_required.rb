@@ -20,10 +20,7 @@ class Claims::Claim::Clawback::ClawbackNotRequired < ApplicationService
         )
       end
 
-      claim.update!(
-        status: :paid,
-        clawback_requested_by: nil,
-      )
+      Claims::Claim::ChangeStatus.call(claim:, attributes: { status: :paid, clawback_requested_by: nil })
     end
   end
 

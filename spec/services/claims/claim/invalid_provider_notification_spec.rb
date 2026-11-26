@@ -1,6 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Claims::Claim::InvalidProviderNotification, type: :service do
+  include_context "with an attributed claim operation"
   include ActiveJob::TestHelper
 
   around do |example|

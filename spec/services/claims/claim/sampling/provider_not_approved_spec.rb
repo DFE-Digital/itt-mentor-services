@@ -1,9 +1,10 @@
 require "rails_helper"
 
 describe Claims::Claim::Sampling::ProviderNotApproved do
+  include_context "with an attributed claim operation"
   let!(:claim) { create(:claim, :submitted, status: :sampling_in_progress, school:) }
 
-  let(:school) { create(:school) }
+  let(:school) { create(:claims_school) }
 
   describe "#call" do
     subject(:call) { described_class.call(claim:, provider_responses:) }

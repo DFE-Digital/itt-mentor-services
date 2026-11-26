@@ -1,6 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Claims::Clawback::UpdateClaimWithESFAResponseJob, type: :job do
+  include_context "with an attributed claim operation"
   let(:claim) { create(:claim, :submitted, status: :clawback_in_progress) }
 
   describe "#perform" do
@@ -15,6 +16,15 @@ RSpec.describe Claims::Clawback::UpdateClaimWithESFAResponseJob, type: :job do
       expect {
         described_class.perform_later(claim)
       }.to have_enqueued_job(described_class).on_queue("default")
+    end
+
+    context "when the claim is no longer awaiting a response" do
+      let(:claim) { create(:claim, :paid) }
+
+      it "rejects a stale response without changing the claim" do
+        expect { perform }.to raise_error(Claims::Claim::ChangeStatus::StaleStatus)
+        expect(claim.reload.status).to eq("paid")
+      end
     end
   end
 end

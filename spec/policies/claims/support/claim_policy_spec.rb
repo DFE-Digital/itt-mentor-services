@@ -32,6 +32,26 @@ describe Claims::Support::ClaimPolicy do
     Claims::ClaimWindow::Build.call(claim_window_params: { starts_on: 2.days.ago, ends_on: 2.days.from_now }).save!(validate: false)
   end
 
+  permissions :legacy_history? do
+    it "allows support users" do
+      expect(claim_policy).to permit(support_user, submitted_claim)
+    end
+
+    it "denies school users" do
+      expect(claim_policy).not_to permit(user, submitted_claim)
+    end
+  end
+
+  describe "Scope" do
+    it "allows support users to query all claims" do
+      expect(described_class::Scope.new(support_user, Claims::Claim).resolve.to_sql).to eq(Claims::Claim.all.to_sql)
+    end
+
+    it "restricts non-support users to an empty relation" do
+      expect(described_class::Scope.new(user, Claims::Claim).resolve).to be_none
+    end
+  end
+
   permissions :edit? do
     context "when user has an internal draft claim" do
       it "grants access" do

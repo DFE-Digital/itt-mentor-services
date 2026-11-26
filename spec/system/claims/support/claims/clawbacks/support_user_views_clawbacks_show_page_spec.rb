@@ -22,6 +22,9 @@ RSpec.describe "Support user requests a clawback on a claim", service: :claims, 
     when_i_navigate_to_the_clawbacks_index_page
     and_i_click_on_claim_with_status_of_clawback_in_progress
     then_i_see_the_show_page_for_the_clawback_in_progress_claim
+
+    when_i_open_the_legacy_archive
+    then_i_see_the_clawback_response_activity
   end
 
   private
@@ -163,6 +166,16 @@ RSpec.describe "Support user requests a clawback on a claim", service: :claims, 
         expect(row).to have_css("ul.govuk-list li", text: mentor.full_name)
       end
     end
-    expect(page).to have_link("View details", href: claims_support_claims_claim_activity_path(@clawback_response_uploaded_activity_log))
+    expect(page).to have_link("Legacy audit archive", href: claims_support_claim_legacy_history_path(@clawback_in_progress_claim))
+  end
+
+  def when_i_open_the_legacy_archive
+    click_on "Legacy audit archive"
+  end
+
+  def then_i_see_the_clawback_response_activity
+    expect(page).to have_title("Legacy audit archive - Claim 33333333 - Claim funding for mentor training - GOV.UK")
+    expect(page).to have_h1("Legacy audit archive")
+    expect(page).to have_link("View activity details", href: claims_support_claims_claim_activity_path(@clawback_response_uploaded_activity_log))
   end
 end

@@ -1,6 +1,7 @@
 require "rails_helper"
 
 describe Claims::Claim::Sampling::Paid do
+  include_context "with an attributed claim operation"
   let!(:claim) { create(:claim, :submitted, status: :sampling_in_progress) }
 
   describe "#call" do

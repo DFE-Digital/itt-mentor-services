@@ -12,6 +12,8 @@ RSpec.describe Claims::Providers::ApproveRejectSamplingClaimWizard, type: :model
     )
   end
 
+  include_context "with an attributed claim operation"
+
   let(:state) { {} }
   let(:params) { ActionController::Parameters.new({}) }
   let(:current_step) { nil }

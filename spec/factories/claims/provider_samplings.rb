@@ -24,6 +24,10 @@ FactoryBot.define do
     association :sampling, factory: :claims_sampling
     association :provider, factory: :claims_provider
 
+    to_create do |sampling|
+      Claims::AuditContext.set(actor: Claims::AuditContext.actor || FactoryBot.create(:claims_support_user)) { sampling.save! }
+    end
+
     trait :with_csv_file do
       csv_file { file_fixture("example-sampling-response.csv") }
     end

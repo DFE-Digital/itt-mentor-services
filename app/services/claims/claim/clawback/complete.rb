@@ -4,7 +4,7 @@ class Claims::Claim::Clawback::Complete < ApplicationService
   end
 
   def call
-    claim.update!(status: :clawback_complete)
+    Claims::Claim::ChangeStatus.call(claim:, attributes: { status: :clawback_complete })
   end
 
   private

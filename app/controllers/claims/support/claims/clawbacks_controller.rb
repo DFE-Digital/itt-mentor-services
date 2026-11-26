@@ -14,9 +14,7 @@ class Claims::Support::Claims::ClawbacksController < Claims::Support::Applicatio
   end
 
   def show
-    claim_activities = Claims::ClaimActivitiesForClaimQuery.call(claim: @claim)
-    @pagy, @claim_activities = pagy(claim_activities)
-    @claim_activities = claim_activities.decorate
+    load_claim_history
   end
 
   def new

@@ -5,7 +5,7 @@ class Claims::Claim::Sampling::ProviderNotApproved < ApplicationService
   end
 
   def call
-    claim.transaction do
+    claim.transaction do |transaction|
       claim.mentor_trainings.each do |mentor_training|
         mentor_training_provider_response = provider_responses.find do |provider_response|
           provider_response[:id] == mentor_training.id
@@ -18,11 +18,10 @@ class Claims::Claim::Sampling::ProviderNotApproved < ApplicationService
           hours_clawed_back: mentor_training_provider_response[:hours_clawed_back],
         )
       end
-      claim.update!(
-        status: :sampling_provider_not_approved,
-        amendment_notification_sent_at: Time.current,
+      Claims::Claim::ChangeStatus.call(
+        claim:, attributes: { status: :sampling_provider_not_approved, amendment_notification_sent_at: Time.current },
       )
-      notify_school
+      transaction.after_commit { notify_school }
     end
   end
 

@@ -18,6 +18,21 @@ RSpec.describe Claims::RemoveUnprocessedPaymentResponsesJob, type: :job do
       expect { processed_payment_response.reload }.not_to raise_error
     end
 
+    it "retains an old response referenced by a lifecycle transition" do
+      response = create(:claims_payment_response, created_at: 2.days.ago)
+      claim = create(:claim, :payment_in_progress)
+      Claims::Claim::ChangeStatus.call(claim:, attributes: { status: :paid }, actor: response.user, source: response)
+
+      expect { perform }.not_to change(Claims::PaymentResponse, :count)
+      expect { response.destroy! }.to raise_error(ActiveRecord::DeleteRestrictionError)
+    end
+
+    it "retains legacy response files referenced by an activity" do
+      response = create(:claims_payment_response, created_at: 2.days.ago)
+      create(:claim_activity, action: :payment_response_uploaded, record: response)
+      expect { perform }.not_to change(Claims::PaymentResponse, :count)
+    end
+
     context "when there are old unprocessed claims payment responses" do
       let!(:old_unprocessed_payment_response) { create(:claims_payment_response, created_at: 1.day.ago) }
       let!(:recent_unprocessed_payment_response) { create(:claims_payment_response, created_at: Time.current) }

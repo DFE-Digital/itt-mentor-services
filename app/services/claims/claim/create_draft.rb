@@ -6,7 +6,7 @@ class Claims::Claim::CreateDraft < ApplicationService
   end
 
   def call
-    updated_claim.save!
+    Claims::Claim::ChangeStatus.call(claim:, attributes: { status: :draft, reference: claim.reference || generate_reference })
 
     if status_changed_to_draft?
       send_claim_created_support_notification_email
@@ -27,14 +27,6 @@ class Claims::Claim::CreateDraft < ApplicationService
   end
 
   def status_changed_to_draft?
-    updated_claim.saved_change_to_status? && updated_claim.draft?
-  end
-
-  def updated_claim
-    @updated_claim ||= begin
-      claim.status = :draft
-      claim.reference = generate_reference if claim.reference.nil?
-      claim
-    end
+    claim.saved_change_to_status? && claim.draft?
   end
 end
